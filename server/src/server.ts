@@ -7,7 +7,8 @@ const users = [
     'Camila',
     'Bartouch',
     'Java',
-    'Toco'
+    'Toco',
+    'Bode'
 ]
 
 app.get('/users',(request, response) => {
