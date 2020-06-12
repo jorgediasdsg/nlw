@@ -26,6 +26,11 @@ app.get('/users/:id', (request, response) => {
 });
 
 app.post('/users', (request, response) => {
+
+    const data = request.body;
+
+    console.log(data);
+
     const user = {
         name: 'Jorge',
         email: 'jorgediascpd@gmail.com'
