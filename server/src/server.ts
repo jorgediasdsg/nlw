@@ -2,6 +2,8 @@ import express from 'express';
 
 const app = express();
 
+app.use(express.json());
+
 const users = [
     'Jorge',
     'Camila',
@@ -9,8 +11,7 @@ const users = [
     'Java',
     'Toco',
     'Bode'
-]
-
+];
 app.get('/users',(request, response) => {
     const search = String(request.query.search);
     
@@ -26,7 +27,6 @@ app.get('/users/:id', (request, response) => {
 });
 
 app.post('/users', (request, response) => {
-
     const data = request.body;
 
     console.log(data);
