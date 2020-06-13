@@ -16,6 +16,10 @@
 // QUERY Param: Parâmentros que vem na pŕopria rota geralmente opcionais como filtros.
 // Resquest Body: Parâmetros para criação/atualização de informações.
 
+//KNEX - Query Builder
+// SELECT * FROM users WHERE name = 'Jorge';    //Normal
+// knex('users').where('name','Jorge').select('*');    //Usando Knex - Pode ser trocado para qualquer banco de dados.
+
 import express from 'express';  
 
 const app = express();  
