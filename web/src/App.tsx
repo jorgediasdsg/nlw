@@ -9,6 +9,7 @@ import './App.css';
 // Voalá
 
 //JSX 
+// Escrever html dentro do Javascript.
 
 function App() {
   return (
