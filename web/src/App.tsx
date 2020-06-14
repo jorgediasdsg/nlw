@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-
+import Header from './Header';
 // Como tudo funciona o react?
 // index.html tem uma DIV root
 // A DIV root está apontada no arquivo index.tsx
@@ -9,11 +9,18 @@ import './App.css';
 // Voalá
 
 //JSX 
-// Escrever html dentro do Javascript.
+// Escrever xml/html dentro do Javascript.
+
+// Component, criamos o component header e colocamos aqui.
+
+// Atributo
 
 function App() {
   return (
-        <h1>Rodandooo!!</h1>
+        <div>
+          <Header title='Ecoleta' />
+          <h1>Conteúdo da aplicação</h1>
+        </div>
   );
 }
 
