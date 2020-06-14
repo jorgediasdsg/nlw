@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Home from './pages/Home/index';
 // Como tudo funciona o react?
 // index.html tem uma DIV root
 // A DIV root está apontada no arquivo index.tsx
@@ -17,7 +18,7 @@ import './App.css';
 
 function App() {
     return (
-          <h1>Hi Jorge!</h1>
+          <Home />
   );
 }
 
