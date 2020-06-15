@@ -1,4 +1,4 @@
-import React, {useEffect, useState, ChangeEvent} from 'react';
+import React, {useEffect, useState, ChangeEvent, FormEvent} from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
@@ -34,8 +34,15 @@ const CreatePoint = () => {
     
     // const [initialPosition, setinitialPosition] = useState<[number, number]>([0, 0]);
 
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        whatsapp: '',
+    });
+
     const [selectedUf, setselectedUf] = useState('0');
     const [selectedCity, setselectedCity] = useState('0');
+    const [selectedItens, setselectedItems] = useState<number[]>([]);
     const [selectedPosition, setselectedPosition] = useState<[number, number]>([0, 0]);
 
     // useEffect(() => {
@@ -91,7 +98,46 @@ const CreatePoint = () => {
         ])
     }
 
-    
+    function handleInputChanges(event: ChangeEvent<HTMLInputElement>){
+        const { name, value } = event.target;
+
+        setFormData({ ...formData, [name]: value});
+
+    }
+
+    function handleSelectedItem(id: number) {
+        const alreadSelected = selectedItens.findIndex(item => item === id);
+        if(alreadSelected >= 0){
+            const filteredItens = selectedItens.filter(item => item !== id);
+            setselectedItems(filteredItens);
+        } else {
+            setselectedItems([ ...selectedItens, id ]);
+        }
+    }
+
+    async function handleSubmit(event: FormEvent){
+        event.preventDefault();
+
+        const { name, email, whatsapp } = formData;
+        const uf = selectedUf;
+        const city = selectedCity;
+        const [latitude, longitude] = selectedPosition;
+        const itens = selectedItens;
+
+        const data = {
+            name,
+            email,
+            whatsapp,
+            uf,
+            city,
+            latitude,
+            longitude,
+            itens
+        }
+        await api.post('points', data);
+
+        alert('Ponto de coleta criado.')
+    }
 
     return (
         <div id="page-create-point">
@@ -102,7 +148,7 @@ const CreatePoint = () => {
                     Voltar para home
                 </Link>
             </header>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h1>Cadastro do <br /> ponto de coleta</h1>
                 <fieldset>
                     <legend>
@@ -114,6 +160,7 @@ const CreatePoint = () => {
                                 type="text"
                                 name="name"
                                 id="name"
+                                onChange={handleInputChanges}
                             />
                         </div>
                     <div className="field-group">
@@ -123,6 +170,7 @@ const CreatePoint = () => {
                                 type="text"
                                 name="email"
                                 id="email"
+                                onChange={handleInputChanges}
                                 />
                         </div>
                         <div className="field">
@@ -131,6 +179,7 @@ const CreatePoint = () => {
                                 type="text"
                                 name="whatsapp"
                                 id="whatsapp"
+                                onChange={handleInputChanges}
                                 />
                         </div>
                     </div>
@@ -183,7 +232,11 @@ const CreatePoint = () => {
                     </legend>
                     <ul className="items-grid">
                         {itens.map(item => (
-                            <li key={item.id}>
+                            <li 
+                            key={item.id} 
+                            onClick={() => handleSelectedItem(item.id)}
+                            className={selectedItens.includes(item.id) ? 'selected' : ''}
+                            >
                                 <img src={item.image_url} alt={item.title}/>
                                 <span>{item.title}</span>
                             </li>
